@@ -6,7 +6,7 @@ const movieSchema = mongoose.Schema({
         required : true
     },
     year:{
-        type:Date,
+        type:String,
         required:true
     },
     genre:{
@@ -15,7 +15,7 @@ const movieSchema = mongoose.Schema({
     },
     stars:[ 
        { type:Schema.Types.ObjectId,
-        ref:"actors"}
+        ref:"users"}
     ],
     image:{
         type:String,
@@ -23,7 +23,7 @@ const movieSchema = mongoose.Schema({
     },
     producer:{
         type:Schema.Types.ObjectId,
-        ref:"producers",
+        ref:"users",
         required:true
     }
 })

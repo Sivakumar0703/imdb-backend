@@ -82,7 +82,7 @@ export const update = async(req,res) => {
 // get all user
 export const getAllUser = async(req,res) => {
     try {
-        const userList = await User.find().select('-password -__v -token');
+        const userList = await User.find().select('-password -__v -token').populate('moviesActed').populate('moviesProduced');
         res.status(200).json({message:"user list received",userList})
     } catch (error) {
         res.status(500).json({message:"Internal Server Error log",error});      
@@ -93,17 +93,21 @@ export const getAllUser = async(req,res) => {
 export const addRecentlyActedMovie = async(req,res) =>{
     try {
         const{isProducer,actorId,movieId} = req.body;
-        const actor = await User.find({_id:actorId});
+        const actor = await User.findById(actorId);
+        if(!actor){
+            return res.status(400).json({message:"actor/producer not found"});
+        }
+        console.log("actor",actor)
         if(isProducer){
             actor.moviesProduced.push(movieId);
         }else{
             actor.moviesActed.push(movieId);
         }
-        actor.save()
-        const updatedListOfUser = await User.find().select('-password -__v -token');
-        res.status(200).json({message:"new movie added to acted/produced list",users:updatedListOfUser});
+        await actor.save()
+        res.status(200).json({message:"new movie added to acted/produced list"});
     } catch (error) {
-        res.status(500).json({message:"Internal Server Error log",error});      
+        res.status(500).json({message:"Internal Server Error log",error});  
+        console.log(error)    
     }
 }
 

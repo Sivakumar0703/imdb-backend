@@ -16,7 +16,18 @@ export const addNewMovie = async function (req,res) {
 export const getAllMovies = async function (req,res) {
     try {
         const allMovie = await Movie.find({}).select('-__v')
-        res.status(200).json({message:" movie registeration successful",movies:allMovie})        
+        .populate('stars')
+        .populate('producer')
+        // .populate({
+        //     path: 'producer', 
+        //     populate: { path: 'moviesProduced', 
+        //     model: 'Movie'
+        //     },
+        //     populate: { path: 'moviesActed', 
+        //     model: 'Movie'
+        //     }  
+        // })
+        res.status(200).json({message:"movie registeration successful",movies:allMovie})        
     } catch (error) {
         console.log(error)
         res.status(500).json({message:"internal server error"})
