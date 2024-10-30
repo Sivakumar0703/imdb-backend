@@ -12,10 +12,7 @@ export const protect = async(req,res,next) => {
         req.headers.authorization.split(" ")[1]
     ) {
         try {
-            // console.log('bearer token from header',req.headers.authorization.startsWith("Bearer")) // true
-            // console.log(' header',req.headers.authorization); // Bearer <token>
             token = req.headers.authorization.split(" ")[1];
-
             // decode the token
             const decoded = jwt.verify(token,process.env.JWT_SECRET_KEY); // we get an id => token is from login 
             req.user = await User.findById(decoded.id); // creating user object and attaching it to the req before this there is no user object inside req

@@ -16,19 +16,15 @@ password:{
 },
 dob:{
     type:String,
-    // default:''
 },
 gender:{
     type:String,
-    // default:''
 },
 bio:{
     type:String,
-    // default:''
 },
 category:{
     type:String,
-    // default:''
 },
 moviesActed:[
     {

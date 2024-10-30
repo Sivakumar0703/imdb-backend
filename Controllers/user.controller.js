@@ -55,7 +55,6 @@ export const getUser = async(req,res) => {
         res.status(200).json({message:"user data found",userData})
     } catch (error) {
         res.status(500).json({message:"Internal Server Error log",error});      
-
     }  
 }
 
@@ -97,7 +96,6 @@ export const addRecentlyActedMovie = async(req,res) =>{
         if(!actor){
             return res.status(400).json({message:"actor/producer not found"});
         }
-        console.log("actor",actor)
         if(isProducer){
             actor.moviesProduced.push(movieId);
         }else{
